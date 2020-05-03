@@ -1,0 +1,7 @@
+---
+- name: restart ovirt_exporter
+  become: true
+  systemd:
+    daemon_reload: true
+    name: ovirt_exporter
+    state: restarted

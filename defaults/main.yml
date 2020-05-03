@@ -1,0 +1,16 @@
+---
+ovirt_exporter_version: 0.9.0
+ovirt_exporter_web_listen_address: "0.0.0.0:9325"
+
+ovirt_exporter_scrape_uri: 'https://localhost/ovirt-engine/api/'
+ovirt_exporter_ssl_verify: true
+ovirt_exporter_user: 'admin@internal'
+ovirt_exporter_password: 'ChangeMe'
+ovirt_exporter_password_file:
+ovirt_exporter_include_disks: true
+ovirt_exporter_include_network: true
+ovirt_exporter_include_snapshots: true
+
+ovirt_exporter_config_flags_extra: {}
+# ovirt_config_flags_extra:
+#   debug: true

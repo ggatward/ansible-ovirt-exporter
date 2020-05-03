@@ -1,0 +1,57 @@
+{{ ansible_managed | comment}}
+
+[Unit]
+Description=Prometheus ovirt_exporter
+After=network-online.target
+StartLimitInterval=0
+
+[Service]
+Type=simple
+User={{ ovirt_exporter_system_user }}
+Group={{ ovirt_exporter_system_group }}
+ExecStart=/usr/local/bin/ovirt_exporter \
+  -api.url="{{ ovirt_exporter_scrape_uri }}" \
+{% if not ovirt_exporter_ssl_verify %}
+  -api.insecure-cert \
+{% endif %}
+  -api.username="{{ ovirt_exporter_user }}" \
+{% if ovirt_password_file is defined %}
+  -api.password-file="{{ ovirt_exporter_password_file }}" \
+{% else %}
+  -api.password="{{ ovirt_exporter_password }}" \
+{% endif %}
+{% if ovirt_exporter_include_disks %}
+  -with-disks \
+{% endif %}
+{% if ovirt_exporter_include_network %}
+  -with-network \
+{% endif %}
+{% if ovirt_exporter_include_snapshots %}
+  -with-snapshots \
+{% endif %}
+  -web.listen-address={{ ovirt_exporter_web_listen_address }}{% for flag, flag_value in ovirt_exporter_config_flags_extra.items() %}\
+  -{{ flag }}{% if flag_value %}={{ flag_value }}{% endif %} {% endfor %}
+
+PrivateTmp=true
+PrivateDevices=true
+ProtectHome=true
+NoNewPrivileges=true
+{% if ovirt_exporter_systemd_version.stdout | int >= 232 %}
+ProtectSystem=strict
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+{% else %}
+ProtectSystem=full
+{% endif %}
+
+{% if http_proxy is defined %}
+Environment="HTTP_PROXY={{ http_proxy }}"{% if https_proxy is defined %} "HTTPS_PROXY={{ https_proxy }}{% endif %}"
+{% endif %}
+
+SyslogIdentifier=ovirt_exporter
+Restart=always
+RestartSec=0
+
+[Install]
+WantedBy=multi-user.target
