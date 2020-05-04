@@ -8,3 +8,12 @@
   when:
     - ansible_version.full is version_compare('2.4', '>=')
     - ansible_selinux.status == "enabled"
+
+- name: Deploy password file
+  copy:
+    content: "{{ ovirt_exporter_password }}"
+    dest: "{{ ovirt_exporter_password_file }}"
+    owner: "{{ ovirt_exporter_system_user }}"
+    group: "{{ ovirt_exporter_system_group }}"
+    mode: '0600'
+  when: ovirt_exporter_password_file is defined

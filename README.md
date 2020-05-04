@@ -19,7 +19,7 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 | `ovirt_exporter_scrape_uri` | https://localhost/ovirt-engine/api/ | Address of the oVirt engine API |
 | `ovirt_exporter_ssl_verify` | true | Verify oVirt engine SSL certificate |
 | `ovirt_exporter_user` | admin@internal | User to access oVirt engine API |
-| `ovirt_exporter_password` | 'ChangeMe' | Password of the user accessing oVirt engine API (if file not defined) |
+| `ovirt_exporter_password` | 'ChangeMe' | Password of the user accessing oVirt engine API |
 | `ovirt_exporter_password_file` | '' | Location of file containing Password of the user accessing oVirt engine API (optional) |
 | `ovirt_exporter_include_disks` | true | Include Storage Domain metrics |
 | `ovirt_exporter_include_network` | true | Include Network metrics |
