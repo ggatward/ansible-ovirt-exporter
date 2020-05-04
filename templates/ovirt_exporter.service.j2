@@ -15,7 +15,7 @@ ExecStart=/usr/local/bin/ovirt_exporter \
   -api.insecure-cert \
 {% endif %}
   -api.username="{{ ovirt_exporter_user }}" \
-{% if ovirt_password_file is defined %}
+{% if ovirt_exporter_password_file is defined %}
   -api.password-file="{{ ovirt_exporter_password_file }}" \
 {% else %}
   -api.password="{{ ovirt_exporter_password }}" \
